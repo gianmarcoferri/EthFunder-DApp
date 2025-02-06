@@ -2,6 +2,8 @@
 
 EthFunder is a decentralized crowdfunding platform built on the Ethereum blockchain and deployed on the Sepolia Testnet. This DApp allows users to create and contribute to crowdfunding projects using Ethereum. Project creators can set funding goals and deadlines, while contributors can support projects they believe in by making donations in Ether.
 
+![Image](https://github.com/user-attachments/assets/d8347e56-e043-44d3-b1f7-f1dac6d3a334)
+
 ## Features
 
 - **Create Projects**: Project creators can set a title, description, funding goal (in wei), and duration for their projects.
@@ -29,9 +31,12 @@ For further information on the project, you can consult the documentation in Ita
 
 To run the DApp, follow these steps:
 
-1. Install Node.js and npm (Node Package Manager) if you haven't already.
-2. Clone the repository: `git clone https://github.com/yourusername/ethfunder-dapp.git`
+1. Install Node.js, npm (Node Package Manager) and Metamask (browser extension) if not already present
+2. Open command prompt
 3. Navigate to the project directory: `cd ethfunder-dapp`
-4. Install the required dependencies: `npm install`
-5. Start the server: `node server.js`
-6. Open your browser and visit `http://localhost:3000/`
+4. Initialize Node.js project: `npm init -y`
+5. Install required dependency: `npm install express`
+6. Start server: `node server.js`
+7. Open browser and visit `http://localhost:3000/`
+
+Or try it [here](https://raw.githack.com/gianmarcoferri/EthFunder-DApp/refs/heads/main/public/index.html)
