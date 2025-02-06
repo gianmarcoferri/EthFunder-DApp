@@ -11,10 +11,6 @@ EthFunder is a decentralized crowdfunding platform built on the Ethereum blockch
 - **Refund Mechanism**: Contributors can request refunds if a project does not meet its funding goal by the deadline.
 - **Withdraw Funds**: Project creators can withdraw funds once the project is successfully funded and completed.
 
-## Getting Started
-
-To get started with EthFunder, you will need MetaMask installed in your browser and some Ether in your wallet. Connect your wallet, create or contribute to projects, and support innovative ideas through decentralized crowdfunding.
-
 ## Technologies Used
 
 - **Solidity**: Smart contracts for the Ethereum blockchain.
