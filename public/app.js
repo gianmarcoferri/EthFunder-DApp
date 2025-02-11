@@ -335,10 +335,10 @@ var contractABI = [
 ];
 var contractAddress = "0xd5fe7E6eB04450095a078A6E31610F2D7617C205";
 
-let web3;
-let contractInstance;
-let currentAddress = null;
-let isFirstAttempt = true;
+let web3; // Web3 instance
+let contractInstance; // Contract instance
+let currentAddress = null; // Current user's address
+let isFirstAttempt = true; // Flag to track the first attempt to connect MetaMask
 
 // Function to show loading indicator
 function showLoadingIndicator() {
@@ -350,6 +350,7 @@ function hideLoadingIndicator() {
     document.getElementById('loading-indicator').style.display = 'none';
 }
 
+// Function to connect to MetaMask
 async function connectMetamask() {
     if (typeof window.ethereum !== 'undefined') {
         try {
@@ -372,6 +373,7 @@ async function connectMetamask() {
     }
 }
 
+// Function to handle user login
 async function login() {
     if (currentAddress) {
         showAlert('MetaMask connected successfully!', 'success');
@@ -383,6 +385,7 @@ async function login() {
     }
 }
 
+// Function to handle user logout
 async function logout() {
     currentAddress = null;
     showAlert('Logged out successfully.', 'info');
@@ -418,7 +421,7 @@ function shortenHex(hex) {
     return hex.slice(0, 6) + '...' + hex.slice(-4);
 }
 
-// Form validation function
+// Form validation function for creating projects
 function validateProjectForm() {
     const title = document.getElementById("project-title").value;
     const description = document.getElementById("project-description").value;
@@ -438,6 +441,7 @@ function validateProjectForm() {
     return true;
 }
 
+// Function to create a new project
 async function createProject() {
     if (!validateProjectForm()) return;
 
@@ -461,6 +465,7 @@ async function createProject() {
     }
 }
 
+// Function to contribute to a project
 async function contribute() {
     const projectId = document.getElementById("project-id").value;
     const amount = document.getElementById("contribution-amount").value;
@@ -485,12 +490,13 @@ async function contribute() {
     }
 }
 
-// Set the project ID in the contribution form
+// Function to set the project ID in the contribution form
 function contributeTo(projectId) {
     document.getElementById('project-id').value = projectId;
     document.getElementById('contribution-amount').focus(); // Focus on the contribution amount field
 }
 
+// Function to withdraw funds from a project
 async function withdrawFunds(projectId) {
     showLoadingIndicator();
     try {
@@ -505,6 +511,7 @@ async function withdrawFunds(projectId) {
     }
 }
 
+// Function to request a refund for a project
 async function refund(projectId) {
     showLoadingIndicator();
     try {
@@ -519,6 +526,7 @@ async function refund(projectId) {
     }
 }
 
+// Function to load all projects
 async function loadProjects() {
     showLoadingIndicator();
     try {
@@ -567,6 +575,7 @@ async function loadProjects() {
     }
 }
 
+// Event listener for DOMContentLoaded to initialize the application
 document.addEventListener('DOMContentLoaded', async () => {
     if (typeof window.ethereum !== 'undefined') {
         console.log("MetaMask is installed!");
@@ -584,6 +593,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             await login();
         }
 
+		// Event listener for account changes in MetaMask
         ethereum.on('accountsChanged', async function (accounts) {
             currentAddress = accounts[0];
             await login();
@@ -593,7 +603,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Initial load
+// Event listener for window load to connect MetaMask
 window.onload = async () => {
     await connectMetamask();
 };
