@@ -2,9 +2,10 @@
 pragma solidity ^0.8.0;
 
 contract Crowdfunding {
-    address public platformOwner;
-    uint public projectCount;
+    address public platformOwner; // Address of the platform owner
+    uint public projectCount; // Counter for the number of projects
 
+    // Structure to represent a project
     struct Project {
         address owner;
         string title;
@@ -15,9 +16,12 @@ contract Crowdfunding {
         bool isCompleted;
     }
 
+    // Mapping to store projects by their ID
     mapping(uint => Project) public projects;
+    // Nested mapping to store contributions by project ID and contributor address
     mapping(uint => mapping(address => uint)) public contributions;
 
+    // Constructor to initialize the platform owner
     constructor() {
         platformOwner = msg.sender;
     }
@@ -35,7 +39,7 @@ contract Crowdfunding {
         _;
     }
 
-    // Create a new project
+    // Function to create a new project
     function createProject(
         string memory _title,
         string memory _description,
@@ -60,7 +64,7 @@ contract Crowdfunding {
         return projectCount;
     }
 
-    // Contribute to a project
+    // Function to contribute to a project
     function contribute(uint _projectId) public payable activeProject(_projectId) {
         require(msg.value > 0, "Contribution must be greater than zero");
 
@@ -78,7 +82,7 @@ contract Crowdfunding {
         }
     }
 
-    // Withdraw funds if the project is completed
+    // Function to allow project owner to withdraw funds if the project is completed
     function withdrawFunds(uint _projectId) public {
         Project storage project = projects[_projectId];
         require(msg.sender == project.owner, "Only project owner can withdraw");
@@ -90,11 +94,9 @@ contract Crowdfunding {
         // Transfer funds to the project owner
         (bool success, ) = project.owner.call{value: amount}("");
         require(success, "Transfer failed");
-
-        // By setting project.fundsRaised to 0 before transferring funds, we minimize the risk of reentrancy.
     }
 
-    // Refund contributions if the project is not completed
+    // Function to allow contributors to get a refund if the project is not completed
     function refund(uint _projectId) public {
         Project storage project = projects[_projectId];
         require(block.timestamp > project.deadline, "Project is still active");
@@ -109,11 +111,10 @@ contract Crowdfunding {
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Refund failed");
 
-        // By setting contributions[_projectId][msg.sender] to 0 before transferring funds, we minimize the risk of reentrancy.
         emit RefundIssued(_projectId, msg.sender, amount);
     }
 
-    // Get details of a project
+    // Function to get details of a project
     function getProject(uint _projectId) public view returns (
         address, string memory, string memory, uint, uint, uint, bool
     ) {
@@ -129,7 +130,7 @@ contract Crowdfunding {
         );
     }
 
-    // Get all active projects
+    // Function to get all active projects
     function getActiveProjects() public view returns (uint[] memory) {
         uint[] memory activeProjects = new uint[](projectCount);
         uint counter = 0;
